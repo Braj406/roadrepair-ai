@@ -1,0 +1,9 @@
+{
+  "name": "RoadRepair AI",
+  "short_name": "RoadRepair",
+  "start_url": "/dashboard",
+  "display": "standalone",
+  "background_color": "#f6f4fd",
+  "theme_color": "#5b3fd6",
+  "icons": [{ "src": "/icon.svg", "sizes": "any", "type": "image/svg+xml" }]
+}

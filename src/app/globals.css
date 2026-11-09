@@ -1,0 +1,132 @@
+@import "tailwindcss";
+
+/* RoadRepair AI theme. Colors live in CSS variables so light and dark mode swap in one place,
+   then @theme exposes them to Tailwind as classes like bg-brand, text-muted and border-line. */
+
+/* Brand tokens. Light theme first, dark theme below. */
+:root {
+  --bg: #f6f4fd;
+  --surface: #ffffff;
+  --surface-2: #f1eefb;
+  --border: #e6e1f5;
+  --text: #1b1638;
+  --muted: #6b6889;
+  --brand: #5b3fd6;
+  --brand-strong: #4a2fc0;
+  --brand-soft: #ece7ff;
+  --sidebar: #221a4d;
+  --sidebar-text: #c9c3ef;
+  --accent: #f59e2c;
+  --high: #e5484d;
+  --high-soft: #fde8e8;
+  --medium: #f08c1a;
+  --medium-soft: #fff0dc;
+  --low: #d6a700;
+  --low-soft: #fff8d6;
+  --ok: #18a058;
+  --ok-soft: #dcf5e7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #110d26;
+    --surface: #1a1536;
+    --surface-2: #231d45;
+    --border: #2f2858;
+    --text: #efedff;
+    --muted: #a19dc6;
+    --brand: #8268ff;
+    --brand-strong: #9a85ff;
+    --brand-soft: #2c2463;
+    --sidebar: #0c0920;
+    --sidebar-text: #b5aee6;
+    --high-soft: #4a1d24;
+    --medium-soft: #4a2e12;
+    --low-soft: #423811;
+    --ok-soft: #12382a;
+  }
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-line: var(--border);
+  --color-ink: var(--text);
+  --color-muted: var(--muted);
+  --color-brand: var(--brand);
+  --color-brand-strong: var(--brand-strong);
+  --color-brand-soft: var(--brand-soft);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-text: var(--sidebar-text);
+  --color-accent: var(--accent);
+  --color-high: var(--high);
+  --color-high-soft: var(--high-soft);
+  --color-medium: var(--medium);
+  --color-medium-soft: var(--medium-soft);
+  --color-low: var(--low);
+  --color-low-soft: var(--low-soft);
+  --color-ok: var(--ok);
+  --color-ok-soft: var(--ok-soft);
+  --font-sans: var(--font-jakarta);
+}
+
+body {
+  background: var(--bg);
+  color: var(--text);
+}
+
+/* Shared building blocks used across pages. */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 1rem;
+  box-shadow: 0 1px 2px rgb(40 20 120 / 0.04), 0 8px 24px -12px rgb(40 20 120 / 0.12);
+}
+
+.btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  background: linear-gradient(135deg, var(--brand), var(--brand-strong));
+  color: white;
+  font-weight: 600;
+  padding: 0.65rem 1.1rem;
+  box-shadow: 0 6px 16px -6px color-mix(in srgb, var(--brand) 70%, transparent);
+  transition: transform 0.12s, filter 0.12s;
+}
+.btn-primary:hover { filter: brightness(1.08); }
+.btn-primary:active { transform: translateY(1px); }
+.btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
+.btn-secondary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border-radius: 0.75rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--text);
+  font-weight: 600;
+  padding: 0.65rem 1.1rem;
+  transition: background 0.12s;
+}
+.btn-secondary:hover { background: var(--surface-2); }
+
+.input {
+  width: 100%;
+  border-radius: 0.75rem;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  padding: 0.65rem 0.9rem;
+  outline: none;
+  transition: border-color 0.12s, box-shadow 0.12s;
+}
+.input:focus {
+  border-color: var(--brand);
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--brand) 22%, transparent);
+}
