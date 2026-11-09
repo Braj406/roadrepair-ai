@@ -1,4 +1,5 @@
 -- RoadRepair AI database schema. Run in Supabase: SQL Editor -> New query -> paste -> Run.
+-- Then run the files in supabase/migrations/ in order.
 create extension if not exists postgis;
 
 create table if not exists organizations (

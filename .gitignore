@@ -46,3 +46,11 @@ next-env.d.ts
 
 # local Claude / editor tool settings
 /.claude/
+
+# AI service: Python environment and model weights
+/ai-service/.venv/
+/ai-service/**/*.pt
+__pycache__/
+
+# Generated test videos and GPS tracks
+/test-data/

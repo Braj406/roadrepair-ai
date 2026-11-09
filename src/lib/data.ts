@@ -69,16 +69,17 @@ function rng(seed: number) {
 
 const TYPE_WEIGHT: Record<DamageType, number> = { pothole: 1, alligator: 0.85, transverse: 0.55, longitudinal: 0.5 };
 
-// Priority formula shown to judges: type weight x confidence x size x repeat sightings x worsening.
-export function priorityScore(i: Pick<Incident, "type" | "confidence" | "timesSeen" | "changePct">, areaM2: number) {
-  const size = Math.min(1, areaM2 / 1.2);
+// Priority formula shown to judges: type weight x confidence x (size, repeat sightings, worsening).
+// size is 0-1 (1 = very large). Kept identical to priority_score in ai-service/app/damage.py.
+export function priorityScore(i: Pick<Incident, "type" | "confidence" | "timesSeen" | "changePct">, size: number) {
+  size = Math.min(1, Math.max(0, size));
   const repeat = Math.min(1, i.timesSeen / 4);
   const worse = Math.min(1, Math.max(0, i.changePct) / 60);
   const raw = TYPE_WEIGHT[i.type] * (0.35 + 0.65 * i.confidence) * (0.15 + 0.4 * size + 0.2 * repeat + 0.25 * worse);
   return Math.round(Math.min(100, raw * 100));
 }
 
-function severityFor(score: number): Severity {
+export function severityFor(score: number): Severity {
   return score >= 45 ? "high" : score >= 28 ? "medium" : "low";
 }
 
@@ -136,7 +137,7 @@ function buildIncidents(): Incident[] {
 
     const first = history[0];
     const latest = history[history.length - 1];
-    const priority = priorityScore({ type, confidence, timesSeen, changePct }, latest.areaM2);
+    const priority = priorityScore({ type, confidence, timesSeen, changePct }, latest.areaM2 / 1.2);
     const status = ticketStatusFor(r());
     const due = new Date(SAMPLE_TODAY.getTime() + (3 + Math.floor(r() * 20)) * DAY_MS);
     const videoSec = Math.floor(r() * 134);
